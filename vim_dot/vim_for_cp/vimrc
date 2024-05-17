@@ -1,0 +1,90 @@
+call plug#begin()
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-sensible'
+Plug 'SirVer/ultisnips'
+Plug 'crusoexia/vim-monokai'
+Plug 'ErichDonGubler/vim-sublime-monokai'
+Plug 'ntk148v/komau.vim'
+call plug#end()
+
+
+" For backspace to work in insert mode
+" use tpope/vim-sensible plugin
+
+set clipboard=unnamed
+
+syntax on
+" colorscheme monokai
+" colorscheme sublimemonokai
+" set t_Co=256  " vim-monokai now only support 256 colours in terminal.
+" set term=xterm-256color
+
+" Set termiguicolors while using iTerm2 and comment it out while using default mac Terminal 
+" set termguicolors
+set showcmd
+
+" Set line-number and highlight color in vim
+set number
+set nowrap
+set rnu
+" highlight LineNr ctermfg=yellow
+
+" Competitive coding coding for vim
+set autoindent 
+set smartindent
+" inoremap { {}<Esc>ha
+" inoremap ( ()<Esc>ha
+" inoremap [ []<Esc>ha
+" inoremap ' ''<Esc>ha
+
+" Compile cpp programs
+
+noremap <F10> <ESC> :w <CR> :!g++ -fsanitize=address -std=c++14 -DONPC -O2 -o %< % && ./%< < input.txt > output.txt<CR>
+inoremap <F10> <ESC> :w <CR> :!g++ -fsanitize=address -std=c++14 -DONPC -O2 -o "%<" "%" && "./%<" < input.txt > output.txt<CR>
+
+
+noremap <F9> <ESC> :w <CR> :!g++ -fsanitize=address -std=c++14 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % && ./%< <CR>
+inoremap <F9> <ESC> :w <CR> :!g++ -fsanitize=address -std=c++14 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % && ./%< <CR>
+
+
+augroup cppRemaps
+    autocmd!
+    autocmd FileType cpp inoremap { {}<Esc>ha
+    autocmd FileType cpp inoremap ( ()<Esc>ha
+    autocmd FileType cpp inoremap [ []<Esc>ha
+    autocmd FileType cpp inoremap " ""<Esc>ha
+    autocmd FileType cpp inoremap ' ''<Esc>ha
+    autocmd FileType cpp inoremap ` ``<Esc>ha
+augroup END
+
+
+
+" Tab spaces
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Changing line cursor to thin when in inset mode
+ let &t_SI = "\e[6 q"
+ let &t_EI = "\e[2 q"
+ set ttimeout
+ set ttimeoutlen=1
+ set ttyfast
+
+set ignorecase
+set smartcase
+
+"NERDTree Toggle
+nmap <C-n> :NERDTreeToggle<CR>
+
+"open NERDTree automatically
+"autocmd VimEnter * NERDTree | wincmd p
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Shortcutting split navigation
+ map <C-h> <C-w>h
+ map <C-j> <C-w>j
+ map <C-k> <C-w>k
+ map <C-l> <C-w>l"
+
